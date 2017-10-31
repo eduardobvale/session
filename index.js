@@ -328,7 +328,7 @@ function session(options) {
       if (!touched) {
         customMaxAgeValue = customMaxAge(req)
         // touch session
-        req.session.touch()
+        req.session.touch(customMaxAgeValue)
         touched = true
       }
 
