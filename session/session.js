@@ -44,8 +44,8 @@ function Session(req, data) {
  * @api public
  */
 
-defineMethod(Session.prototype, 'touch', function touch() {
-  return this.resetMaxAge();
+defineMethod(Session.prototype, 'touch', function touch(customMaxAgeValue) {
+  return this.resetMaxAge(customMaxAgeValue);
 });
 
 /**
@@ -55,8 +55,8 @@ defineMethod(Session.prototype, 'touch', function touch() {
  * @api public
  */
 
-defineMethod(Session.prototype, 'resetMaxAge', function resetMaxAge() {
-  this.cookie.maxAge = this.cookie.originalMaxAge;
+defineMethod(Session.prototype, 'resetMaxAge', function resetMaxAge(customMaxAgeValue) {
+  this.cookie.maxAge = customMaxAgeValue != null ? customMaxAgeValue : this.cookie.originalMaxAge;
   return this;
 });
 

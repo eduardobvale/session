@@ -71,6 +71,7 @@ var defer = typeof setImmediate === 'function'
  * @param {Object} [options]
  * @param {Object} [options.cookie] Options for cookie
  * @param {Function} [options.genid]
+ * @param {Function} [options.customMaxAge]
  * @param {String} [options.name=connect.sid] Session ID cookie name
  * @param {Boolean} [options.proxy]
  * @param {Boolean} [options.resave] Resave unmodified sessions back to the store
@@ -97,6 +98,9 @@ function session(options) {
 
   // get the session store
   var store = opts.store || new MemoryStore()
+
+  // get the custom max age function
+  var customMaxAge = options.customMaxAge
 
   // get the trust proxy setting
   var trustProxy = opts.proxy
@@ -233,8 +237,9 @@ function session(options) {
       }
 
       if (!touched) {
+        customMaxAgeValue = customMaxAge()
         // touch session
-        req.session.touch()
+        req.session.touch(customMaxAgeValue)
         touched = true
       }
 
@@ -253,7 +258,7 @@ function session(options) {
 
       ended = true;
 
-      var ret;
+      var ret, customMaxAgeValue;
       var sync = true;
 
       function writeend() {
@@ -321,6 +326,7 @@ function session(options) {
       }
 
       if (!touched) {
+        customMaxAgeValue = customMaxAge()
         // touch session
         req.session.touch()
         touched = true
