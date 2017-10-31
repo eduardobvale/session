@@ -237,7 +237,7 @@ function session(options) {
       }
 
       if (!touched) {
-        customMaxAgeValue = customMaxAge()
+        customMaxAgeValue = customMaxAge(req)
         // touch session
         req.session.touch(customMaxAgeValue)
         touched = true
@@ -326,7 +326,7 @@ function session(options) {
       }
 
       if (!touched) {
-        customMaxAgeValue = customMaxAge()
+        customMaxAgeValue = customMaxAge(req)
         // touch session
         req.session.touch()
         touched = true
